@@ -1,3 +1,8 @@
+#+TITLE:        Git Bisect
+#+AUTHOR:       Caleb Beers & Matt Laine
+#+LATEX:        \setlength\parindent{0pt}
+#+LATEX_HEADER: \usepackage{parskip}
+#+LATEX_HEADER: \usepackage[margin=0.5in]{geometry}
 * What you will learn
 In this lesson, we will go over two common use cases of `git bisect`. The first use case involves manually looking for problems while doing a binary search. One might do this while looking over a few commits to find something simple. The second example involves automating both the testing and the searching in order to deal with the scenario of having multiple contributors working on multiple features, and not knowing where the problem might have arisen.
 * Example 1: Manually using git bisect
