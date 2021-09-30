@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+if [[ $1 == "-h" || $1 == "--help" ]]; then
+		echo "  usage:"
+		echo ""
+		echo "  $ ./new_topic git/checkout"
+		echo ""
+		echo "  makes new topic for git checkout"
+		echo "  populates with README.org file with a common template"
+		exit 0
+fi
+
+topic=$1
+shift
+
+mkdir -p $topic
+touch $topic/README.org
+cat >> $topic/README.org<< EOF
+#+TITLE:        Title goes here
+#+AUTHOR:       Author goes here
+#+LATEX:        \setlength\parindent{0pt}
+#+LATEX_HEADER: \usepackage{parskip}
+#+LATEX_HEADER: \usepackage[margin=0.5in]{geometry}
+* What you will learn
+* Prerequisites
+If you are unfamiliar with any of these prerequisites, or if you would like a refresher, here are some links
+* Example 1: Foo
+* Example 2: Bar
+* What you learned
+EOF
+git add $topic/README.org
+git commit -m "make new topic: $topic"
