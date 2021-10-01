@@ -20,7 +20,8 @@ Let's say you have a git repo with a long commit history. Recently, you've notic
 
 Git bisect is based on binary search and lets you track down the first occurence of the bug. Now, I could sit here and spin up an elaborate description of a commit history, or I could just have you actually
 generate one and follow along with this example. The latter is a better idea, so run the bisect-01 script included with this repo:
-`
+#+NAME bisect-01
+#+BEGIN_SRC shell
 #!/usr/bin/env bash
 
 echo row > test.txt
@@ -52,7 +53,7 @@ git add -u && git commit -m "commit 9"
 
 echo stream >> test.txt
 git add -u && git commit -m "commit 10"
-`
+#+END_SRC
 Note that this script must be run inside of a git repo. So use git init to create a git repo in a folder, then cd into that folder before running the script.
 
 To make a long story short, that script echoes the lyrics to "row, row, row your boat" into a file called test.txt, one word at a time. For each word it echoes, it creates a commit message consisting of "Commit n", where n is the number of the commit. An error is deliberately inserted in one of the commits. Where the lyrics should say "row, row, row your boat", they instead say "row, row, row your car"! Now, you can find the error by just poking into the script, but that's no fun, so let's use git bisect.
