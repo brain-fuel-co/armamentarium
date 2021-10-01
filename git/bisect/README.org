@@ -1,4 +1,4 @@
-# Created 2021-10-01 Fri 12:58
+# Created 2021-10-01 Fri 13:01
 #+TITLE: Git Bisect
 #+AUTHOR: Caleb Beers & Matt Laine
 #+latex: \setlength\parindent{0pt}
@@ -19,7 +19,7 @@ If you are unfamiliar with any of these prerequisites, or if you would like a re
 Let's say you have a git repo with a long commit history. Recently, you've noticed a bug in your software, and you've tracked down the exact part of the code that's causing the problem. In order to roll back the changes to the most recent point without the bug, you need to find the place where the bug first occurred. Commit histories can be thousands upon thousands of commits long, even if the bug has only existed for a short time. How do you track down the first occurrence of the bug? The answer is git bisect.
 
 Git bisect is based on binary search and lets you track down the first occurence of the bug. Now, I could sit here and spin up an elaborate description of a commit history, or I could just have you actually generate one and follow along with this example. The latter is a better idea, so run the bisect-01 script included with this repo:
-#-INCLUDE: "./bisect-01" src emacs-lisp
+#-INCLUDE: "./bisect-01" src emacs-lisp :lines "1-31"
 Note that this script must be run inside of a git repo. So use git init to create a git repo in a folder, then cd into that folder before running the script.
 
 To make a long story short, that script echoes the lyrics to "row, row, row your boat" into a file called test.txt, one word at a time. For each word it echoes, it creates a commit message consisting of "Commit n", where n is the number of the commit. An error is deliberately inserted in one of the commits. Where the lyrics should say "row, row, row your boat", they instead say "row, row, row your car"! Now, you can find the error by just poking into the script, but that's no fun, so let's use git bisect.
