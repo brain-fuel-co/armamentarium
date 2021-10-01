@@ -1,18 +1,68 @@
-#+TITLE:        Git Bisect
-#+AUTHOR:       Caleb Beers & Matt Laine
-#+LATEX:        \setlength\parindent{0pt}
-#+LATEX_HEADER: \usepackage{parskip}
-#+LATEX_HEADER: \usepackage[margin=0.5in]{geometry}
-* What you will learn
-In this lesson, we will go over two common use cases of `git bisect`. The first use case involves manually looking for problems while doing a binary search. One might do this while looking over a few commits to find something simple. The second example involves automating both the testing and the searching in order to deal with the scenario of having multiple contributors working on multiple features, and not knowing where the problem might have arisen.
-* Prerequisites
-If you are unfamiliar with any of these prerequisites, or if you would like a refresher, here are some links
-** Git
-[merge]
-** Shell
-[echo]
-** Data Structures & Algorithms (DSA)
-[Binary Search]
-* Example 1: Manually using git bisect
-* Example 2: Using automated testing with git bisect
-* What you learned
+(** denotes a prerequisite)
+
+Let's say you have a git repo with a long commit history. Recently, you've noticed a bug in your software, and you've tracked down the exact part of the code that's causing the problem. In order to roll back the changes to the most recent point without the bug, you need to find the place where the bug first occurred. Commit histories can be thousands upon thousands of commits long, even if the bug has only existed for a short time. How do you track down the first occurrence of the bug? The answer is git bisect.
+
+Git bisect is based on binary search** and lets you track down the first occurence of the bug. Now, I could sit here and spin up an elaborate description of a commit history, or I could just have you actually generate one and follow along with this example. The latter is a better idea, so run the bisect-01 script included with this repo:
+```
+./bisect-01
+```
+Note that this script must be run inside of a git repo. So use
+```
+git init
+```
+to create a git repo in a folder, then cd** into that folder before running the script.
+
+To make a long story short, that script echoes** the lyrics to "row, row, row your boat" into a file called test.txt, one word at a time. For each word it echoes**, it creates a commit message** consisting of "Commit n", where n is the number of the commit. An error is deliberately inserted in one of the commits. Where the lyrics should say "row, row, row your boat", they instead say "row, row, row your car"! Now, you can find the error by just poking into the script, but that's no fun, so let's use git bisect.
+
+First, type
+```
+git log
+```
+**
+in your terminal. If you've run the script, it will show you the list of commits with commit messages and SHA values**. The SHA value** is the big long code with all the letters and numbers that follows the word "commit". Scroll down through your commit history until you find Commit 1. Now you can type
+```
+git bisect start HEAD vwxyz
+```
+Where vwxyz is the first few characters of the SHA value**. This starts the binary search** at Commit 1. To check if Commit 1 has the bug, we can type
+```
+cat test.txt
+```
+and note that we don't see the error there. In fact, Commit 1 was before the word "boat" was even inserted! So we can type
+```
+git bisect good
+```
+to mark Commit 1 as a good commit. Now the binary search** will jump forward to Commit 7. Once again, we can cat** the file test.txt to see what's up. Remember that git checks out** a new commit whenever we mark one good or bad, so the cat in this case will tell us what the file looks like in Commit 7. You'll notice that Commit 7 contains the error (row, row, row your car) so we use
+```
+git bisect bad
+```
+to mark it as a commit containing the bug. We'll continue this process until we mark the most recent good commit as good using git bisect good. Easy-peasy.
+
+But what if you have a long commit history? A commit history in a repo of any appreciable size will not be ten commits long. You're likely to have hundreds or thousands of commits through which you must search. While binary search** does have a logarithmic time complexity**, it would still be nice to automate the process of using git bisect. We need a faster way to do this than just cat-ing the same file on every commit we search. Well, there's a command for that! It's called git bisect run. Git bisect run can be used in your terminal like this:
+```
+git bisect run <some script>
+```
+That's the command, but you can't just type it into your terminal and go. It needs to be used in a specific context, so let's learn how to actually use it.
+
+I'm gonna assume that you've already done the first part of this and run the bisect-01 script. If not, or if you've already deleted the files from that, then go ahead and run the bisect-setup-02 script to get your repo into a position to run the new script. Then run bisect-02, then git log.
+
+Now, we're gonna do more or less the same thing, but we're going to use a test script. First, we're gonna look through the git log for Commit 11, which is the first commit made by bisect-02. Then we're going to grab the first four or five characters of the SHA value,** and use
+```
+git bisect start HEAD <SHA value>
+```
+To start the process of git bisect. Then we'll use
+```
+git bisect run ./test_nightmare
+```
+to run the test_nightmare script as a test along with this git bisect session. Now, this is all well and good, and I can tell you how to proceed in a moment, but what the hell is going on, exactly?
+
+Well, git bisect run <script> is meant to automate the process of doing git bisect. <script> is meant to be some shell script containing a test. Here's what happens when you type that command: git bisect automatically runs the test script. If the test script has an exit code** of 0, then git bisect run takes that to mean that the commit is good and moves on to the next commit. If the test script gives back any other exit code, git bisect assumes that the commit is bad and moves on accordingly. So you want to write your script so that it returns a 0 if it's a good commit.
+
+In this case, the bisect-02 script sets things up so that the word "nightmare" is contained in one of the commits. The test, therefore, is written so that it will return 0 if and only if the test.txt file does NOT contain the word, "nightmare". So git bisect run test_nightmare will run test nightmare against test.txt (because test.txt is hardcoded as the file to test inside of test_nightmare) on each commit until the bisection process is complete. At that point, you can type
+```
+git bisect reset
+```
+to return to your master branch. Then just type
+```
+git revert <SHA of bad commit>
+```
+to revert to the most recent good commit. It's important to note that, when you type git bisect reset, you're gonna get back an abbreviated SHA** value. That output makes it easy to use revert on the correct commit.
