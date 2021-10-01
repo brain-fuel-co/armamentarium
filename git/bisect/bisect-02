@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+
+git checkout -b feature/1
+echo merrily >> test.txt
+git add -u && \
+git commit -m "Commit 11" && \
+git checkout master && \
+git merge feature/1 --no-ff
+
+git checkout -b feature/2
+echo merrily >> test.txt
+git add -u && \
+git commit -m "Commit 12" && \
+git checkout master && \
+git merge feature/2 --no-ff
+
+git checkout -b feature/3
+echo merrily >> test.txt
+git add -u && \
+git commit -m "Commit 13" && \
+git checkout master && \
+git merge feature/3 --no-ff
+
+git checkout -b feature/4
+echo merrily >> test.txt
+git add -u && \
+git commit -m "Commit 14" && \
+git checkout master && \
+git merge feature/4 --no-ff
+
+git checkout -b feature/5
+echo life >> test.txt
+git add -u && \
+git commit -m "Commit 15" && \
+git checkout master && \
+git merge feature/5 --no-ff
+
+git checkout -b feature/6
+echo is >> test.txt
+git add -u && \
+git commit -m "Commit 16" && \
+git checkout master && \
+git merge feature/6 --no-ff
+
+git checkout -b feature/7
+echo but >> test.txt
+git add -u && \
+git commit -m "Commit 17" && \
+git checkout master && \
+git merge feature/7 --no-ff
+
+git checkout -b feature/8
+echo a >> test.txt
+git add -u && \
+git commit -m "Commit 18" && \
+git checkout master && \
+git merge feature/8 --no-ff
+
+git checkout -b feature/9
+echo dream >> test.txt
+git add -u && \
+git commit -m "Commit 19" && \
+git checkout master && \
+git merge feature/9 --no-ff
+
+git checkout -b feature/10
+sed -i -e 's/dream/nightmare/g' test.txt 
+git add -u && \
+git commit -m "Commit 20" && \
+git checkout master && \
+git merge feature/10 --no-ff

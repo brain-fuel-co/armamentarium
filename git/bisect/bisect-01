@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+echo row > test.txt
+git add test.txt && git commit -m "Commit 1"
+
+echo row >> test.txt
+git add -u && git commit -m "Commit 2"
+
+echo row >> test.txt
+git add -u && git commit -m "Commit 3"
+
+echo your >> test.txt
+git add -u && git commit -m "Commit 4"
+
+echo boat >> test.txt
+git add -u && git commit -m "Commit 5"
+
+echo gently >> test.txt
+git add -u && git commit -m "Commit 6"
+
+sed -i -e 's/boat/car/g' test.txt 
+git add -u && git commit -m "Commit 7"
+
+echo down >> test.txt
+git add -u && git commit -m "Commit 8"
+
+echo the >> test.txt
+git add -u && git commit -m "Commit 9"
+
+echo stream >> test.txt
+git add -u && git commit -m "Commit 10"
