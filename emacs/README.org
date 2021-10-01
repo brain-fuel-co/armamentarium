@@ -1,0 +1,11 @@
+#+TITLE:        Title goes here
+#+AUTHOR:       Author goes here
+#+LATEX:        \setlength\parindent{0pt}
+#+LATEX_HEADER: \usepackage{parskip}
+#+LATEX_HEADER: \usepackage[margin=0.5in]{geometry}
+* What you will learn
+* Prerequisites
+If you are unfamiliar with any of these prerequisites, or if you would like a refresher, here are some links
+* Example 1: Foo
+* Example 2: Bar
+* What you learned
