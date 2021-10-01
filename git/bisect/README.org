@@ -16,7 +16,7 @@ If you are unfamiliar with any of these prerequisites, or if you would like a re
 [Binary Search]
 
 * Example 1: Manually using git bisect
-Let's say you have a git repo with a long commit history. Recently, you've noticed a bug in your software, and you've tracked down the exact part of the code that's causing the problem. In order to roll back the changes to the most recent point without the bug, you need to find the place where the bug first occurred. Commit histories can be thousands upon thousands of commits long, even if the bug has only existed for a short time. How do you track down the first occurrence of the bug? The answer is src_shell{git bisect}.
+Let's say you have a git repo with a long commit history. Recently, you've noticed a bug in your software, and you've tracked down the exact part of the code that's causing the problem. In order to roll back the changes to the most recent point without the bug, you need to find the place where the bug first occurred. Commit histories can be thousands upon thousands of commits long, even if the bug has only existed for a short time. How do you track down the first occurrence of the bug? The answer is #src_shell{git bisect}.
 
 Git bisect is based on binary search and lets you track down the first occurence of the bug. Now, I could sit here and spin up an elaborate description of a commit history, or I could just have you actually
 generate one and follow along with this example. The latter is a better idea, so run the bisect-01 script included with this repo:
