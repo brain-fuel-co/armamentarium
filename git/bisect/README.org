@@ -8,11 +8,11 @@ In this lesson, we will go over two common use cases of `git bisect`. The first 
 * Prerequisites
 If you are unfamiliar with any of these prerequisites, or if you would like a refresher, here are some links
 ** Git
-[git merge](https://github.com/brain-fuel-co/armamentarium/tree/main/git/merge)
+[[https://github.com/brain-fuel-co/armamentarium/tree/main/git/merge][git merge]]
 ** Shell
-[echo](https://github.com/brain-fuel-co/armamentarium/tree/main/shell/echo)
+[[https://github.com/brain-fuel-co/armamentarium/tree/main/shell/echo][echo]]
 ** Data Structures & Algorithms (DSA)
-[Binary Search](https://github.com/brain-fuel-co/armamentarium/tree/main/dsa/algorithms/binary-search)
+[[https://github.com/brain-fuel-co/armamentarium/tree/main/dsa/algorithms/binary-search][Binary Search]]
 * Example 1: Manually using git bisect
 * Example 2: Using automated testing with git bisect
 * What you learned
