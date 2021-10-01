@@ -20,7 +20,6 @@ Let's say you have a git repo with a long commit history. Recently, you've notic
 
 Git bisect is based on binary search and lets you track down the first occurence of the bug. Now, I could sit here and spin up an elaborate description of a commit history, or I could just have you actually
 generate one and follow along with this example. The latter is a better idea, so run the bisect-01 script included with this repo:
-#+NAME bisect-01
 #+BEGIN_SRC shell
 #!/usr/bin/env bash
 
@@ -63,7 +62,83 @@ First, type git log in your terminal. If you've run the script, it will show you
 * Example 2: Using automated testing with git bisect
 But what if you have a long commit history? A commit history in a repo of any appreciable size will not be ten commits long. You're likely to have hundreds or thousands of commits through which you must search. While binary search does have a logarithmic time complexity, it would still be nice to automate the process of using git bisect. We need a faster way to do this than just cat-ing the same file on every commit we search. Well, there's a command for that! It's called git bisect run. Git bisect run can be used in your terminal like this: git bisect run <some script> That's the command, but you can't just type it into your terminal and go. It needs to be used in a specific context, so let's learn how to actually use it.
 
-I'm gonna assume that you've already done the first part of this and run the bisect-01 script. If not, or if you've already deleted the files from that, then go ahead and run the bisect-setup-02 script to get your repo into a position to run the new script. Then run bisect-02, then git log.
+I'm gonna assume that you've already done the first part of this and run the bisect-01 script. If not, or if you've already deleted the files from that, then go ahead and run the bisect-setup-02 script to get your repo into shape for the next lesson:
+#+BEGIN_SRC shell
+#!/usr/bin/env bash
+#!/usr/bin/env bash
+
+git checkout -b feature/1
+echo merrily >> test.txt
+git add -u && \
+git commit -m "Commit 11" && \
+git checkout master && \
+git merge feature/1 --no-ff
+
+git checkout -b feature/2
+echo merrily >> test.txt
+git add -u && \
+git commit -m "Commit 12" && \
+git checkout master && \
+git merge feature/2 --no-ff
+
+git checkout -b feature/3
+echo merrily >> test.txt
+git add -u && \
+git commit -m "Commit 13" && \
+git checkout master && \
+git merge feature/3 --no-ff
+
+git checkout -b feature/4
+echo merrily >> test.txt
+git add -u && \
+git commit -m "Commit 14" && \
+git checkout master && \
+git merge feature/4 --no-ff
+
+git checkout -b feature/5
+echo life >> test.txt
+git add -u && \
+git commit -m "Commit 15" && \
+git checkout master && \
+git merge feature/5 --no-ff
+
+git checkout -b feature/6
+echo is >> test.txt
+git add -u && \
+git commit -m "Commit 16" && \
+git checkout master && \
+git merge feature/6 --no-ff
+
+git checkout -b feature/7
+echo but >> test.txt
+git add -u && \
+git commit -m "Commit 17" && \
+git checkout master && \
+git merge feature/7 --no-ff
+
+git checkout -b feature/8
+echo a >> test.txt
+git add -u && \
+git commit -m "Commit 18" && \
+git checkout master && \
+git merge feature/8 --no-ff
+
+git checkout -b feature/9
+echo dream >> test.txt
+git add -u && \
+git commit -m "Commit 19" && \
+git checkout master && \
+git merge feature/9 --no-ff
+
+git checkout -b feature/10
+sed -i -e 's/dream/nightmare/g' test.txt
+git add -u && \
+git commit -m "Commit 20" && \
+git checkout master && \
+git merge feature/10 --no-ff
+
+#+END_SRC
+Then run bisect-02, then git log.
 
 Now, we're gonna do more or less the same thing, but we're going to use a test script. First, we're gonna look through the git log for Commit 11, which is the first commit made by bisect-02. Then we're going to grab the first four or five characters of the SHA value, and use git bisect start HEAD <SHA value> To start the process of git bisect. Then we'll use git bisect run ./test_nightmare to run the test_nightmare script as a test along with this git bisect session. Now, this is all well and good, and I can tell you how to proceed in a moment, but what the hell is going on, exactly?
 
